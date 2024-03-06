@@ -11,6 +11,10 @@ app.use(express.json())
 //db config
 connectDB()
 
+// register routers
+app.use('/api/register', require('./routers/auth/register'))
+
+
 //port
 const PORT = process.env.PORT || 5890
 

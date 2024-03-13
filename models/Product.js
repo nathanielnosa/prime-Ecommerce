@@ -11,8 +11,11 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
-  size: String,
-  color: String,
+  image: String,
+  size: Array,
+  color: Array,
+  inStock: Number,
+  isAvailable: { type: Boolean, default: true },
   price: { type: Number, required: true },
   category: { type: Array }
 }, { timestamps: true })

@@ -20,5 +20,12 @@ const verifyAndAuthenticate = (req, res, next) => {
     }
   })
 }
+const verifyAdminOnly = (req, res, next) => {
+  verifyToken(req, res, () => {
+    if (req.user.isAdmin) {
+      next()
+    }
+  })
+}
 
-module.exports = { verifyToken, verifyAndAuthenticate }
+module.exports = { verifyToken, verifyAndAuthenticate, verifyAdminOnly }

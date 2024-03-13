@@ -29,4 +29,24 @@ const deleteUser = async (req, res) => {
   }
 }
 
-module.exports = { updateUser, deleteUser }
+const getUser = async (req, res) => {
+  try {
+    const foundUser = await User.findOne({ _id: req.params.id }).exec()
+    if (!foundUser) return res.status(302).json("No user with id found")
+    res.status(200).json(foundUser)
+  } catch (error) {
+    res.status(500).json(`Error: ${error.message}`)
+  }
+}
+
+const getUsers = async (req, res) => {
+  try {
+    const foundUser = await User.find().exec()
+    res.status(200).json(foundUser)
+  } catch (error) {
+    res.status(500).json(`Error: ${error.message}`)
+  }
+}
+
+
+module.exports = { updateUser, deleteUser, getUser, getUsers }

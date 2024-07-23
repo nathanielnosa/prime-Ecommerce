@@ -40,8 +40,9 @@ const getUser = async (req, res) => {
 }
 
 const getUsers = async (req, res) => {
+  const query = req.query.new
   try {
-    const foundUser = await User.find().exec()
+    const foundUser = query ? await User.find().sort({ createdAt: -1 }).limit(3).exec() : await User.find().exec()
     res.status(200).json(foundUser)
   } catch (error) {
     res.status(500).json(`Error: ${error.message}`)

@@ -63,9 +63,22 @@ const getProduct = async (req, res) => {
 }
 
 const getProducts = async (req, res) => {
+  const query = req.query.new
+  const catQuery = req.query.cat
   try {
-    const foundProduct = await Product.find().exec()
-    res.status(200).json(foundProduct)
+    let product;
+    if (query) {
+      product = await Product.find().sort({ createdAt: -1 }).limit(1)
+    } else if (catQuery) {
+      product = await Product.find({
+        category: {
+          $in: [catQuery],
+        }
+      })
+    } else {
+      product = await Product.find().sort({ createdAt: -1 }).exec()
+    }
+    res.status(200).json(product)
   } catch (error) {
     res.status(500).json(`Error: ${error.message}`)
   }
